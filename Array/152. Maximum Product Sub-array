@@ -1,0 +1,22 @@
+class Solution(object):
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        maxProd = nums[0]
+        minProd = nums[0]
+        curr_max = nums[0]
+        
+        
+        for i in range(1, len(nums)):
+            highest = max(maxProd*nums[i], minProd*nums[i], nums[i])
+            lowest = min(maxProd*nums[i], minProd*nums[i], nums[i])
+            maxProd, minProd = highest, lowest
+            if (curr_max < max(maxProd, minProd)): 
+                curr_max = max(maxProd, minProd)
+        
+        return curr_max
+        
+        
