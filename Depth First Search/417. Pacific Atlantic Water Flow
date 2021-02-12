@@ -1,0 +1,47 @@
+class Solution(object):
+    def pacificAtlantic(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        if not matrix:
+            return matrix
+        result = []   
+        self.directions = [(1,0),(-1,0),(0,1),(0,-1)]
+        m = len(matrix)
+        n = len(matrix[0])
+        pacific = [[False for j in range(n)] for i in range(m)]
+        atlantic = [[False for j in range(n)] for i in range(m)]
+        self.m = m
+        self.n = n
+        for i in range(m):
+            self.dfs(matrix, pacific, i, 0)
+            self.dfs(matrix, atlantic, i, n-1)
+            
+        for i in range(n):
+            self.dfs(matrix, pacific, 0, i)
+            self.dfs(matrix, atlantic, m-1, i)
+        
+        for row in range(m):
+            for col in range(n):
+                if pacific[row][col] and atlantic[row][col]:
+                    result.append([row, col])
+        
+        return result
+    
+    def dfs(self, matrix, ocean, row, col):
+        ocean[row][col] = True
+        for direction in self.directions:
+            x = row + direction[0]
+            y = col + direction[1]
+            if x < 0 or x >= self.m or y < 0 or y >= self.n or ocean[x][y] or matrix[x][y] < matrix[row][col]:
+                continue
+            else:
+                self.dfs(matrix, ocean, x, y)
+
+        
+    
+
+            
+        
+                
