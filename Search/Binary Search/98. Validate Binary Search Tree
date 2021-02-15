@@ -1,0 +1,60 @@
+
+########### Recursive DFS
+
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        
+        if not root:
+            return root
+        
+        return self.dfs(root, float("-inf") , float("inf"))
+        
+    def dfs(self, root, floor, ceiling):
+        if not root:
+            return True
+        elif (root.val <= floor or root.val >= ceiling):
+                return False
+        else:
+            return self.dfs(root.left, floor,  min(ceiling, root.val)) and self.dfs(root.right, max(floor, root.val), ceiling)
+
+
+###### Iterative In-Order
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        
+        pre = None
+        
+        if not root: 
+            return True
+        
+        stack = []
+        
+        while root or stack:
+            while root:
+                stack.append(root)
+                root = root.left
+            
+            root = stack.pop()
+            print(root.val)
+            if (root.val <= pre):
+                return False
+            pre = root.val
+            root = root.right
+        
+        return True
+        
