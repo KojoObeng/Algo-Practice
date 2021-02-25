@@ -1,0 +1,21 @@
+ tortoise = strs[0]
+        hare = strs[0]
+        
+        while True:
+            tortoise = strs[tortoise]
+            hare = strs[strs[hare]]
+            print(tortoise, hare)
+            if tortoise == hare:
+                break
+        
+        
+        tortoise = strs[0]
+        print(tortoise)
+        
+        while tortoise != hare:
+            print(tortoise, hare)
+            tortoise = strs[tortoise]
+            hare = strs[hare]
+        
+        return hare
+            
