@@ -1,9 +1,14 @@
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
         
         result = set()
         
         for num in nums:
-            if nums[abs(num)-1] > 0:
-                nums[abs(num)-1] *= -1
+            curr = abs(num)-1
+            if nums[curr] > 0:
+                nums[curr] *= -1
         
         
         for idx in range(len(nums)):
@@ -12,4 +17,3 @@
         
         return result
                 
-            
