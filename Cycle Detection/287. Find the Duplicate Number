@@ -18,4 +18,25 @@
             hare = strs[hare]
         
         return hare
+        
+
+        
+        # Do a binary search on range of possible numbers
+        
+        low = 1
+        high = len(strs)-1
+        
+        while high > low:
+            count = 0
+            mid = low + (high-low)/2
             
+            for str in strs:
+                if str <= mid:
+                    count +=1
+            
+            if count > mid:
+                high = mid
+            else:
+                low = mid + 1
+            
+        return low
