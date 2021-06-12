@@ -1,0 +1,44 @@
+class Solution(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        
+        result = []
+        colStart = 0
+        colEnd = len(matrix[0])-1
+        rowStart = 0
+        rowEnd = len(matrix)-1
+        
+        while colStart <= colEnd and rowStart <= rowEnd:
+            for col in range(colStart, colEnd+1):
+                curr = matrix[rowStart][col]
+                result.append(curr)
+            rowStart +=1
+
+            for row in range(rowStart, rowEnd+1):
+                curr = matrix[row][colEnd]
+                result.append(curr)
+            colEnd -= 1
+
+            # if there is a row to traverse the coloumn on
+            if rowStart <= rowEnd:
+                for col in range(colEnd, colStart-1, -1):
+                    curr = matrix[rowEnd][col]
+                    result.append(curr)                    
+                rowEnd -=1
+
+            if colStart <= colEnd:
+                for row in range(rowEnd, rowStart-1, -1):
+                    curr = matrix[row][colStart]
+                    result.append(curr)
+                colStart += 1
+
+        return result
+
+            
+            
+            
+                
+        

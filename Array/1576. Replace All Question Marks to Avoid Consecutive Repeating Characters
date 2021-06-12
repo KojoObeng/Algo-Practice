@@ -1,0 +1,27 @@
+
+class Solution(object):
+    def modifyString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        
+        acceptable = ["a","b","c"]
+        
+        for idx in range(len(s)):
+            notAllowed = []
+            if s[idx] == "?":
+                if idx-1 >= 0:
+                    notAllowed.append(s[idx-1])
+                if idx+1 <= len(s)-1:
+                    notAllowed.append(s[idx+1])
+                    
+                for test in acceptable:
+                    if test not in notAllowed:
+                        s = s[:idx] + test + s[idx+1:]
+                        break
+
+        return s
+            
+                    
+                
