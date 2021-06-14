@@ -1,0 +1,50 @@
+    
+    ### DFS RECURSIVE
+
+    def averageOfLevels(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[float]
+        """
+        
+        info = []
+    
+        def dfs(node, depth):
+            if node:
+                if depth >= len(info):
+                    info.append([])
+                info[depth].append(node.val)
+                dfs(node.left, depth+1)
+                dfs(node.right, depth+1)
+        
+        dfs(root, 0)
+        return [float(sum(s))/len(s) for s in info]
+    
+
+    #### DFS ITERATIVE
+
+    class Solution:
+    def averageOfLevels(self, root: TreeNode) -> List[float]:
+        
+        if root == None:
+            return
+        
+        stack = [[0, root]]
+        info = []
+        
+        while stack:
+            curr = stack.pop()
+            currDepth = curr[0]
+                
+            if currDepth >= len(info):
+                info.append([])
+            
+            info[currDepth].append(curr[1].val)
+            if curr[1].right:   
+                stack.append([currDepth+1, curr[1].right])
+            if curr[1].left: 
+                stack.append([currDepth+1, curr[1].left])
+        
+        result = [sum(values)/len(values)  for values in info]
+        
+        return result
