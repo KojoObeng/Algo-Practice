@@ -1,0 +1,48 @@
+    ### BFS
+    
+    def minDepth(self, root: TreeNode) -> int:
+        
+        if not root:
+            return 0
+        
+        queue = deque([root])
+        depth = 0
+        
+        while queue:
+            level = []
+            for i in range(len(queue)):
+                curr = queue.popleft()
+                if not curr.right and not curr.left:
+                    return depth + 1
+                if curr.left:
+                    queue.append(curr.left)
+                if curr.right:
+                    queue.append(curr.right)
+            depth += 1
+                
+                
+    ### DFS 
+
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        
+        if not root:
+            return 0
+        elif not root.left and not root.right:
+            return 1
+        elif root.left and not root.right:
+            return 1 + self.minDepth(root.left)
+        elif not root.left and root.right:
+            return 1 + self.minDepth(root.right)
+        else:
+            return 1 + min(self.minDepth(root.left), self.minDepth(root.right))
+
+                
+                        
+                    
+                
+                
+                
+        
+        
+                         
