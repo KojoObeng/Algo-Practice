@@ -1,0 +1,14 @@
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        
+        size = len(nums)
+        zeros = 0
+        for idx in range(size):
+            if nums[idx-zeros] == 0:
+                curr = nums.pop(idx-zeros)
+                nums.append(curr)
+                zeros += 1
+        return nums
