@@ -1,0 +1,62 @@
+## BFS Iterative
+
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node:
+            return
+        
+        queue = deque([node])
+        mapping = {node: Node(node.val)}
+        
+        while queue:
+            for i in range(len(queue)):
+                curr = queue.popleft()
+                for neigh in curr.neighbors:
+                    if neigh not in mapping:
+                        queue.append(neigh)
+                        mapping[neigh] = Node(neigh.val)
+                    mapping[curr].neighbors.append(mapping[neigh])
+        return mapping[node]
+                        
+
+## DFS Recursive
+
+    class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node:
+            return
+        
+        mapping = {1: Node(node.val)}
+        self.dfs(node, mapping)
+        return mapping[1]
+        
+    def dfs(self, node, mapping):
+        for neigh in node.neighbors:
+            if neigh.val not in mapping:
+                mapping[neigh.val] = Node(neigh.val)
+                self.dfs(neigh, mapping)
+            mapping[node.val].neighbors.append(mapping[neigh.val])
+
+## DFS Iterative 
+            
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node:
+            return
+        
+        mapping = {node: Node(node.val)}
+        stack = [node]
+                
+        while stack:
+            curr = stack.pop()
+            for neigh in curr.neighbors:
+                if neigh not in mapping:
+                    mapping[neigh] = Node(neigh.val)
+                    stack.append(neigh)
+                mapping[curr].neighbors.append(mapping[neigh])
+        
+        return mapping[node]
+
+        
+
+                
