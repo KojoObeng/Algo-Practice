@@ -1,0 +1,26 @@
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        degree = [0 for _ in range(numCourses)]
+        outNeigh = [[] for   _ in range(numCourses)]
+        result = []
+    
+        for course, pre in prerequisites:
+            outNeigh[pre].append(course)  
+            degree[course] += 1
+      
+        
+        queue = deque([idx for idx in range(numCourses) if degree[idx] == 0])
+        
+        while queue:
+            for i in range(len(queue)):
+                curr = queue.popleft()
+                result.append(curr)
+                for out in outNeigh[curr]:
+                    degree[out] -= 1
+                    if not degree[out]:
+                        queue.append(degree[out])
+                    
+        return not sum(degree)
+                    
+                    
+                    
