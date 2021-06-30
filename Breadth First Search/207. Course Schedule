@@ -1,8 +1,7 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         degree = [0 for _ in range(numCourses)]
-        outNeigh = [[] for   _ in range(numCourses)]
-        result = []
+        outNeigh = [[] for  _ in range(numCourses)]
     
         for course, pre in prerequisites:
             outNeigh[pre].append(course)  
@@ -14,13 +13,41 @@ class Solution:
         while queue:
             for i in range(len(queue)):
                 curr = queue.popleft()
-                result.append(curr)
                 for out in outNeigh[curr]:
                     degree[out] -= 1
                     if not degree[out]:
-                        queue.append(degree[out])
+                        queue.append(out)
                     
         return not sum(degree)
                     
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        outNeigh = [[] for idx in range(numCourses)]
+        visited = [0 for _ in range(numCourses)]
+         
+        for course, pre in prerequisites:
+            outNeigh[course].append(pre)
+        
+        if numCourses == 1:
+            return True
+         
+
+        for course in range(numCourses):
+            if not self.dfs(course, visited, outNeigh):
+                return False
+        return True
+    
+    def dfs(self,course, visited, outNeigh):
+        if visited[course] == -1:
+            return False
+        if visited[course] == 1:
+            return True
+        visited[course] = -1
+        for next_course in outNeigh[course]:
+            if not self.dfs(next_course, visited, outNeigh):
+                return False
+        visited[course] = 1
+        return True
+               
                     
-                    
+                
