@@ -1,0 +1,35 @@
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        
+        outNeighs =  [[] for i in range(numCourses)]
+        inDegrees = [0 for i in range(numCourses)]
+        result = []
+        
+        for course, prereq in prerequisites:
+            outNeighs[prereq].append(course)
+            inDegrees[course] += 1
+        
+        queue = deque([])
+        
+        for course in range(numCourses):
+            if inDegrees[course] == 0:
+                queue.append(course)
+            
+        while queue:
+            for course in range(len(queue)):
+                curr = queue.popleft()
+                result.append(curr)
+                for currNeigh in outNeighs[curr]:
+                    inDegrees[currNeigh] -= 1
+                    if inDegrees[currNeigh] == 0:
+                        queue.append(currNeigh)
+        
+        if len(result) == numCourses:
+            return result
+        else:
+            return []
+                        
+                        
+                        
+                
+        
