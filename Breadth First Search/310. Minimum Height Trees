@@ -1,0 +1,84 @@
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        
+        if n <=2:
+            return [i for i in range(n)]
+        
+        edgeList = [[] for _ in range(n)]
+        for _in, out in edges:
+            edgeList[_in].append(out)
+            edgeList[out].append(_in)
+            
+        queue = deque([])
+        
+        for idx in range(n):
+            if len(edgeList[idx]) == 1:
+                queue.append(idx)
+
+        nodes_left = n
+        
+        while nodes_left > 2:
+            size = len(queue)
+            nodes_left -= size
+            for i in range(size):
+                leaf = queue.popleft()
+                neighbour = edgeList[leaf].pop()
+                edgeList[neighbour].remove(leaf)
+                if len(edgeList[neighbour]) == 1:
+                    queue.append(neighbour)      
+        
+        return queue
+            
+#### DFS
+
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        
+        
+        if n <=2:
+            return [i for i in range(n)]
+        
+        self.neighbours = [[] for i in range(n)]
+        
+        for start, end in edges:
+            self.neighbours[start].append(end)
+            self.neighbours[end].append(start)
+            
+        self.dist = [-1 for _ in range(n)]
+        self.track = [-1 for _ in range(n)]
+        
+        def dfs(node):
+            for neigh in self.neighbours[node]:
+                if self.dist[neigh] == -1:
+                    self.dist[neigh] = self.dist[node] + 1
+                    self.track[neigh] = node
+                    dfs(neigh)
+        
+        self.dist[0] = 0
+        dfs(0)      
+        first_node = self.dist.index(max(self.dist))
+        
+        
+        self.dist = [-1 for _ in range(n)]
+        self.track = [-1 for _ in range(n)]
+        self.dist[first_node] = 0
+        dfs(first_node)
+        second_node = self.dist.index(max(self.dist))
+        
+        path = []
+        while second_node != -1:
+            path.append(second_node)
+            second_node = self.track[second_node]
+        
+        print(path)
+        size = len(path)
+        
+        if (size % 2 == 1):
+            return [path[(size)//2]]
+        else:
+            return [path[size//2], path[(size-1)//2]]
+            
+        
+
+                
+            
