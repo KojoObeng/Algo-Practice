@@ -1,0 +1,39 @@
+   ### DFS  
+    
+    def connect(self, root: 'Node') -> 'Node':
+        
+        if not root:
+            return root
+        
+        def dfs(root):
+            if root and root.right and root.left:
+                root.left.next = root.right
+                if root.next:
+                    root.right.next = root.next.left
+                
+                dfs(root.left)
+                dfs(root.right)
+        
+        dfs(root)
+        return root
+
+### BFS
+
+    def connect(self, root: 'Node') -> 'Node':
+        
+        if not root:
+            return root
+  
+        queue = deque([root])
+        
+        while queue:
+            size = len(queue)
+            for i in range(size):
+                curr = queue.popleft()
+                if i != size-1:
+                    curr.next = queue[0]
+                if curr.left:
+                    queue.append(curr.left)
+                    queue.append(curr.right)
+        return root
+    
