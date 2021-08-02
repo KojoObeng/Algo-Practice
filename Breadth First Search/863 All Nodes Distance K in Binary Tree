@@ -1,0 +1,103 @@
+# DFS 
+
+ All recursive
+
+ # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
+        
+        result = []
+        
+        def findDistance(node, level):
+            if (not node) or (level > k) : return
+            if level == k:
+                result.append(node.val)
+            else:
+                findDistance(node.left, level+1)
+                findDistance(node.right, level+1)
+        
+        def dfs(node):
+            if not node: return -1
+            if node.val == target.val:
+                findDistance(node, 0)
+                return 0
+            
+            left, right = dfs(node.left), dfs(node.right)
+            
+            # if on left
+            if (left != -1):
+                if left + 1 == k:
+                    result.append(node.val)
+                    return -1
+                else:
+                    findDistance(node.right, left + 2)
+                return left + 1
+            elif (right != -1):
+                if right + 1 == k:
+                    result.append(node.val)
+                    return -1
+                else:
+                    findDistance(node.left , right + 2)
+                return right + 1
+            return -1
+        
+        dfs(root)
+        return result
+                
+# BFS 
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
+        
+        result = []
+        parentMap = {}
+        
+        def storeParent(node, parent):
+            if not node: return 
+            else:
+                parentMap[node] = parent
+                storeParent(node.left, node)
+                storeParent(node.right, node)
+        
+        storeParent(root, None)
+        
+        queue = deque([target])
+        seen = [target]
+        level = 0
+        
+        while queue:
+            for i in range(len(queue)):
+                curr = queue.popleft()
+                if level == k:
+                    result.append(curr.val)
+                if curr.left and curr.left not in seen:
+                    queue.append(curr.left)
+                    seen.append(curr.left)
+                if curr.right and curr.right not in seen:
+                    queue.append(curr.right)
+                    seen.append(curr.right)
+                currParent = parentMap[curr]
+                if currParent and currParent not in seen:
+                    queue.append(currParent)
+                    seen.append(currParent)
+            level += 1
+        
+        return result
+                
+                
+            
+            
+            

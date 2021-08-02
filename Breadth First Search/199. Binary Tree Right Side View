@@ -1,0 +1,21 @@
+### DFS
+
+    def rightSideView(self, root: TreeNode) -> List[int]:
+        
+        if not root:
+            return root
+        
+        result = []
+        
+        def dfs(root, result, level):
+            if not root:
+                return
+            
+            if len(result) < level:
+                result.append(root.val)
+            dfs(root.right, result, level+1)
+            dfs(root.left, result, level+1)
+            
+        dfs(root, result,  1)
+        return result
+            
