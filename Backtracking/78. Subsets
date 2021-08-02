@@ -1,0 +1,21 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        
+        result = []
+        size = len(nums)
+        
+        def backtrack(curr, idx):
+            result.append(curr[:])
+            
+            for i in range(idx, size):
+                curr.append(nums[i])
+                backtrack(curr, i+1)
+                curr.pop()
+        
+        backtrack([], 0)
+        return result
+                                
+            
+            
+            
+        
