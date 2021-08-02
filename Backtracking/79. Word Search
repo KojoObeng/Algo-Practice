@@ -1,0 +1,23 @@
+def dfs(self,board,i,j,word):
+        if len(word)==0:
+            return True
+        if i<0 or i>=len(board) or j<0 or j>=len(board[0]) or board[i][j]!=word[0]:
+            return False
+        temp = board[i][j]
+        board[i][j] = '#'
+        right = self.dfs(board,i+1,j,word[1:])
+        left = self.dfs(board,i-1,j,word[1:])
+        down = self.dfs(board,i,j+1,word[1:])
+        up = self.dfs(board,i,j-1,word[1:])
+        res = right or left or up or down
+        board[i][j] = temp
+        return res
+    def exist(self, board, word):
+        if not board or not word:
+            return False
+        m,n = len(board),len(board[0])
+        for i in range(m):
+            for j in range(n):
+                if self.dfs(board,i,j,word):
+                    return True
+        return False
