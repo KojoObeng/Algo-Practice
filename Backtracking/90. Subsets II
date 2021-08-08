@@ -1,0 +1,22 @@
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        
+        result = []
+        size = len(nums)
+        nums.sort()
+        print(nums)
+
+        
+        def backtrack(curr, idx):
+            result.append(curr[:])
+            
+            for i in range(idx, size):
+                curr.append(nums[i])
+                if not (i > idx and nums[i] == nums[i-1]):
+                    backtrack(curr, i+1)
+                curr.pop()
+                
+        backtrack([], 0)
+        return result
+                
+        
