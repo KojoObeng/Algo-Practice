@@ -1,0 +1,26 @@
+
+        class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        
+        size = len(nums)
+        result = []
+        visited = [False] * size
+        nums.sort()
+        
+        def backtrack(curr):
+            if len(curr) == size:
+                result.append(curr[:])
+            else:
+                for i in range(size):
+                    #if not the same as previous and havne't visited this yet
+                    if ((i == 0) or (nums[i] != nums[i-1]) or (visited[i-1])) and visited[i]==False:
+                        curr.append(nums[i])
+                        visited[i] = True
+                        backtrack(curr)
+                        visited[i] = False
+                        curr.pop()
+                        
+        
+        
+        backtrack([])
+        return result

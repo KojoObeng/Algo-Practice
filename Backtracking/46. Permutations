@@ -1,4 +1,6 @@
 class Solution:
+
+    ### Can use Set as well
     def permute(self, nums: List[int]) -> List[List[int]]:
         
         if not nums: return nums
@@ -22,4 +24,3 @@ class Solution:
         
         backtrack([])
         return result
-            
