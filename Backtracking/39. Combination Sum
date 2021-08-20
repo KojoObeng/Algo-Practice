@@ -1,0 +1,19 @@
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        
+        size = len(candidates)
+        result = []
+        
+        def dfs(tmpList, idx, runningSum):
+            if runningSum == target:
+                result.append(tmpList[:])
+            elif runningSum > target:
+                return
+            else:
+                for i in range(idx, size):
+                    tmpList.append(candidates[i])
+                    dfs(tmpList, i, runningSum + candidates[i])
+                    tmpList.pop()
+        
+        dfs([], 0, 0)
+        return result
