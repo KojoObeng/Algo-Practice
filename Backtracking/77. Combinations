@@ -1,0 +1,15 @@
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        result = []
+        
+        
+        def dfs(temp, curr):
+            if len(temp) == k:
+                result.append(temp[:])
+            else:
+                for i in range(curr, n+1):
+                    temp.append(i)
+                    dfs(temp, i+1)
+                    temp.pop()        
+        dfs([], 1)
+        return result
