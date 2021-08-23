@@ -1,0 +1,28 @@
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        
+        size = len(candidates)
+        candidates.sort()
+        result = []
+        seen = [False]*size
+        
+        def dfs(candidates, curr, currSum, idx):
+            if currSum == target:
+                result.append(curr[:])
+            elif currSum > target:
+                return
+            else:
+                for i in range(idx, size):
+                    if ((i == idx ) or candidates[i] != candidates[i-1]):
+                        curr.append(candidates[i])
+                        dfs(candidates, curr, currSum + candidates[i], i+1)
+                        curr.pop()
+        
+        dfs(candidates, [], 0, 0)
+        return result
+                        
+                    
+                    
+                    
+                
+                
