@@ -1,0 +1,26 @@
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        
+        result = []
+        options = ["(",")"]
+        
+        def dfs(currList, openCount, closedCount):
+            if (len(currList) == 2*n):
+                result.append("".join(currList))
+            else:
+                if (openCount < n):
+                    currList.append("(")
+                    dfs(currList, openCount + 1, closedCount)
+                    currList.pop()
+                if (closedCount < openCount):
+                    currList.append(")")
+                    dfs(currList, openCount, closedCount+1)
+                    currList.pop()
+                    
+                
+        
+        dfs([], 0, 0)
+        return result
+                        
+
+        
