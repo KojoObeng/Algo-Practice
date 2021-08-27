@@ -1,0 +1,20 @@
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        
+        
+        result = []
+        size = len(s)
+        she's 
+        def backtrack(currList, idx):
+            if (idx >= size):
+                result.append(currList[:])
+            else:
+                for i in range(idx, size):
+                    curr = s[idx: i+1]
+                    if (curr == curr[::-1]):
+                        currList.append(s[idx: i+1])
+                        backtrack(currList, i+1)
+                        currList.pop()
+        
+        backtrack([], 0)
+        return result
