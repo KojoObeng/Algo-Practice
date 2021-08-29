@@ -1,0 +1,39 @@
+### Set a special case for when the given target is geeater than the last element
+class Solution:
+    def nextGreatestLetter(self, letters: List[str], target: str) -> str:
+        lo, hi = 0, len(letters)-1
+        
+        if target >= letters[hi]: return letters[0]
+        
+        while hi > lo:
+            mid = lo + (hi - lo)//2
+            if target >= letters[mid]:
+                lo = mid + 1
+            else:
+                hi = mid
+        
+        return letters[hi]
+
+### Use n instead of n-1 so have a designated number to deal with that case
+class Solution:
+    def nextGreatestLetter(self, letters: List[str], target: str) -> str:
+        lo, hi = 0, len(letters)
+        
+        
+        while hi > lo:
+            mid = lo + (hi - lo)//2
+            if target >= letters[mid]:
+                lo = mid + 1
+            else:
+                hi = mid
+        
+        return letters[hi % len(letters)]
+        
+
+
+
+
+                
+
+            
+            
