@@ -1,0 +1,15 @@
+# Maxheap
+
+maxHeap = []
+rows = len(matrix)
+cols  = len(matrix[0])
+
+for row in range(rows):
+    for col in range(cols):
+        heappush(maxHeap, -matrix[row][col])
+        if len(maxHeap) > k:
+            heappop(maxHeap)
+
+return -heappop(maxHeap)
+
+        
