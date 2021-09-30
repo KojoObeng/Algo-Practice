@@ -1,3 +1,40 @@
+# Binary search
+
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        # Binary Search
+        
+        rows = len(matrix)
+        cols = len(matrix[0])
+        
+        low = matrix[0][0]
+        high = matrix[rows-1][cols-1]
+        
+        def countLessThanOrEqual(num):
+            col = cols-1
+            count = 0
+            
+            for row in range(rows):
+                while (matrix[row][col] > num and col >=0):
+                    col -= 1
+                count += col + 1
+                col = cols-1
+                
+            return count    
+            
+        
+        while high > low:
+            mid = low + (high-low)//2
+            if countLessThanOrEqual(mid) < k:
+                low = mid+1
+            else:
+                high = mid
+        
+        return low
+        
+
+
+
 # Maxheap
 
 maxHeap = []
@@ -11,5 +48,28 @@ for row in range(rows):
             heappop(maxHeap)
 
 return -heappop(maxHeap)
+
+# (M*N*logK)
+
+
+# Minheap
+
+minHeap = []
+rows = len(matrix)
+cols  = len(matrix[0])
+
+for row in range(rows):
+    heappush(minHeap, (matrix[row][0], row, 0))
+
+val = 0
+for i in range(k):
+    val, row, col = heappop(minHeap)
+    if col < cols-1:
+        heappush(minHeap, (matrix[row][col+1], row, col+1))
+
+return val
+    
+        
+        
 
         
