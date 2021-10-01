@@ -1,0 +1,20 @@
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
+        
+        size = len(nums)
+        low = 0
+        high = size -1
+        
+        while high > low:
+            mid = low + (high-low)//2
+
+            toTheRight = nums[mid+1] if (mid+1 <= size-1) else float("-inf")
+            
+            if (nums[mid] < toTheRight) :
+                low = mid +1
+            else:
+                high = mid
+        
+        return low
+            
+        
