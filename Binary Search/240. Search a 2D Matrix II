@@ -1,0 +1,20 @@
+## Saddleback search
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        
+        rows = len(matrix)
+        cols = len(matrix[0])
+        
+        curRow = 0
+        curCol = cols-1
+        
+        while (curRow < rows) and (curCol >= 0):
+            if (target < matrix[curRow][curCol]):
+                curCol-=1
+            elif (target > matrix[curRow][curCol]):
+                curRow +=1
+            else:
+                return True
+            
+        return False
+        
