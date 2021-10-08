@@ -17,4 +17,28 @@ class Solution:
                 return True
             
         return False
+
+## Binary search
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+
+        rows = len(matrix)
+        cols = len(matrix[0])
+        
+        def helper(xStart, yStart, xEnd, yEnd):
+            if ((xStart >= rows) or (yStart >= cols) or (xEnd < 0) or (yEnd < 0) or (xEnd < xStart) or (yEnd < yStart)):
+                return False
+            
+            xMid = xStart + (xEnd-xStart)//2
+            yMid = yStart + (yEnd-yStart)//2
+            
+            if (target == matrix[xMid][yMid]):
+                return True
+            elif (target > matrix[xMid][yMid]):
+                return helper(xMid+1, yStart, xEnd, yEnd) or helper(xStart, yMid+1, xMid, yEnd)
+            else:
+                return helper(xStart, yStart, xEnd, yMid-1) or helper(xStart, yMid, xMid-1, yEnd)
+
+        return helper(0, 0, rows-1, cols-1)
+
         
