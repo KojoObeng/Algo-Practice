@@ -1,0 +1,22 @@
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        
+        if not root: return 0
+        
+        def dfs(root):
+            if not root.left and not root.right:
+                return 1
+            elif not root.left:
+                return dfs(root.right) + 1
+            elif not root.right:
+                return dfs(root.left) + 1
+            else:
+                return min(dfs(root.left), dfs(root.right)) +1
+            
+        return dfs(root)
+            
+        
+
+        
+        
+        
