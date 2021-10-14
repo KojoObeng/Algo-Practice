@@ -1,0 +1,41 @@
+## DFS Recursive     
+    if not root:
+        return False
+    
+    def dfs(root, currSum):
+        if not root:
+            return False
+        if (not root.left and not root.right):
+            return currSum + root.val == targetSum
+        else:
+            return dfs(root.left, currSum + root.val) or dfs(root.right, currSum + root.val)
+            
+
+    return dfs(root, 0)
+
+
+## DFS Iterative
+
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        
+        stack = [(root, root.val)]
+        
+        while stack:
+            curr, currVal = stack.pop()
+            
+            if (not curr.left and not curr.right and currVal == targetSum):
+                return True
+            if curr.left:
+                stack.append((curr.left, currVal+curr.left.val))
+            if curr.right:
+                stack.append((curr.right, currVal+curr.right.val))
+            
+        
+        return False
+            
+        
+    
+        
+        
