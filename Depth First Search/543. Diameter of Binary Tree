@@ -1,0 +1,14 @@
+        self.maxDiameter = 0
+        
+        def dfs(root):
+            if not root:
+                return -1
+            else:
+                leftDepth = dfs(root.left)
+                rightDepth = dfs(root.right)
+                self.maxDiameter = max(self.maxDiameter, leftDepth + rightDepth + 2)
+                return 1 + max(leftDepth, rightDepth)
+        
+        dfs(root)
+        return self.maxDiameter
+            
