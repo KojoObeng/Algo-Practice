@@ -1,10 +1,7 @@
-## DFS
-
-class Solution:
-    def findTargetSumWays(self, nums: List[int], target: int) -> int:
         size = len(nums)
         totalSum = sum(nums)
-        seen = [[None for i in range(2*totalSum+1)] for i in range(size)]
+        # seen = [[None for i in range(2*totalSum+1)] for i in range(size)]
+        seen = {}
         
         
         def dfs(idx, sum):
@@ -14,11 +11,11 @@ class Solution:
                 else:
                     return 0
             else:
-                if seen[idx][sum+totalSum]:
-                    return seen[idx][sum+totalSum]
+                if (idx,sum) in seen:
+                    return seen[(idx,sum)]
                 else:
-                    seen[idx][sum+totalSum] = dfs(idx+1, sum+nums[idx]) + dfs(idx+1, sum-nums[idx])
-                    return seen[idx][sum+totalSum]
+                    seen[(idx, sum)] = dfs(idx+1, sum+nums[idx]) + dfs(idx+1, sum-nums[idx])
+                    return seen[(idx,sum)]
 
         
         return dfs(0, 0)
