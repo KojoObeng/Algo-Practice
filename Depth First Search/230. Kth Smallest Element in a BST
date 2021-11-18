@@ -1,0 +1,22 @@
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        
+        count = k
+        self.kSmallest = -1
+        
+        def dfs(root):
+            nonlocal count
+            if not root:
+                return 0
+            if self.kSmallest > -1:
+                return
+            
+            dfs(root.left)
+            count -=1
+            if count == 0:
+                self.kSmallest = root.val
+                return
+            dfs(root.right)
+            
+        dfs(root)
+        return self.kSmallest
+  
