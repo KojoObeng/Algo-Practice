@@ -1,56 +1,6 @@
-# DFS 
+# DFS
 
- All recursive
-
- # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
-class Solution:
-    def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
-        
-        result = []
-        
-        def findDistance(node, level):
-            if (not node) or (level > k) : return
-            if level == k:
-                result.append(node.val)
-            else:
-                findDistance(node.left, level+1)
-                findDistance(node.right, level+1)
-        
-        def dfs(node):
-            if not node: return -1
-            if node.val == target.val:
-                findDistance(node, 0)
-                return 0
-            
-            left, right = dfs(node.left), dfs(node.right)
-            
-            # if on left
-            if (left != -1):
-                if left + 1 == k:
-                    result.append(node.val)
-                    return -1
-                else:
-                    findDistance(node.right, left + 2)
-                return left + 1
-            elif (right != -1):
-                if right + 1 == k:
-                    result.append(node.val)
-                    return -1
-                else:
-                    findDistance(node.left , right + 2)
-                return right + 1
-            return -1
-        
-        dfs(root)
-        return result
-                
-# BFS 
+All recursive
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -59,25 +9,89 @@ class Solution:
 #         self.left = None
 #         self.right = None
 
+
+class Solution:
+    # Definition for a binary tree node.
+    # class TreeNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.left = None
+    #         self.right = None
+
+
 class Solution:
     def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
-        
+
+        result = []
+
+        if not root:
+            return root
+
+        def countFromNode(root, count):
+            if not root:
+                return
+            if count == k:
+                result.append(root.val)
+            else:
+                countFromNode(root.left, count + 1)
+                countFromNode(root.right, count + 1)
+
+        def dfs(root):
+            if not root:
+                return -1
+            elif (root.val == target.val):
+                countFromNode(root, 0)
+                return 0
+            else:
+                L, R = dfs(root.left), dfs(root.right)
+                if (L >= 0):
+                    if L + 1 == k:
+                        result.append(root.val)
+                    else:
+                        countFromNode(root.right, L + 2)
+                    return L+1
+                elif (R >= 0):
+                    if R + 1 == k:
+                        result.append(root.val)
+                    else:
+                        countFromNode(root.left, R + 2)
+                    return R+1
+                else:
+                    return -1
+
+        dfs(root)
+        return result
+
+# BFS
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+
+class Solution:
+    def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
+
         result = []
         parentMap = {}
-        
+
         def storeParent(node, parent):
-            if not node: return 
+            if not node:
+                return
             else:
                 parentMap[node] = parent
                 storeParent(node.left, node)
                 storeParent(node.right, node)
-        
+
         storeParent(root, None)
-        
+
         queue = deque([target])
         seen = [target]
         level = 0
-        
+
         while queue:
             for i in range(len(queue)):
                 curr = queue.popleft()
@@ -94,10 +108,5 @@ class Solution:
                     queue.append(currParent)
                     seen.append(currParent)
             level += 1
-        
+
         return result
-                
-                
-            
-            
-            
