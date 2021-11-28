@@ -1,0 +1,42 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
+        result = 0
+        cache = {}
+        
+        def dfs(root, currSum):
+            nonlocal result
+            if not root:
+                return
+            
+            currSum += root.val
+
+            if (currSum == targetSum):
+                result += 1
+                
+            if ((currSum - targetSum) in cache):
+                result += cache[currSum - targetSum]
+            
+                        
+            if (not (currSum in cache)): 
+                cache[currSum] = 1
+            else:
+                cache[currSum] +=1
+                
+            dfs(root.left, currSum)
+            dfs(root.right, currSum)
+            
+            cache[currSum] -= 1
+
+                
+            
+        dfs(root, 0)
+        return result
+            
+            
+        
