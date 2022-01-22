@@ -1,0 +1,13 @@
+    def __init__(self, nums: List[int]):
+        self.dp = []
+        self.nums = nums[:]
+        
+        currSum = 0
+        for idx in range(len(nums)):
+            currSum += nums[idx]
+            self.dp.append(currSum)
+        
+        
+
+    def sumRange(self, left: int, right: int) -> int:
+        return self.dp[right] - self.dp[left] + self.nums[left]
