@@ -1,3 +1,19 @@
+        ans = float("-inf")
+        minCurrSum, maxCurrSum = 1, 1 
+        
+        
+        for i in range(len(nums)):
+            
+            minCurrSum, maxCurrSum = min(nums[i], maxCurrSum*nums[i], minCurrSum*nums[i]), max(nums[i], maxCurrSum*nums[i], minCurrSum*nums[i])
+            
+            ans = max(ans, maxCurrSum)
+            
+        
+        return ans
+            
+
+
+
 class Solution(object):
     def maxProduct(self, nums):
         """
