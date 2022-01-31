@@ -1,3 +1,33 @@
+class Solution(object):
+    def findTargetSumWays(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        size = len(nums)
+        sumCounter = {0: 1}
+        
+        for idx in range(size):
+            print(sumCounter)
+            next = defaultdict(lambda: 0)
+            for possibleSum in sumCounter.keys():
+                posCurrSum = nums[idx] + possibleSum
+                negCurrSum = -1*nums[idx] + possibleSum
+                
+                next[posCurrSum] += sumCounter[possibleSum]
+                next[negCurrSum] += sumCounter[possibleSum]
+                    
+            sumCounter = next
+
+        return sumCounter[target]
+                    
+                
+                    
+                            
+        
+        
+        
         class Solution:
             def findTargetSumWays(self, nums: List[int], target: int) -> int:
                 totalSum = sum(nums)
