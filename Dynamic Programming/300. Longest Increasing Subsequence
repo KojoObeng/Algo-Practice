@@ -1,0 +1,45 @@
+class Solution(object):
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        
+        dp = [1] * len(nums)
+        dp[0] = 1
+        
+        for i in range(len(dp)):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j]+1)
+        
+        return max(dp)
+
+
+class Solution(object):
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        size = len(nums)
+        
+        dp = [1]*size
+        result = 1
+        
+        for i in range(1, size):
+            smallerMax = float("-inf")
+            for j in range(i):
+                if nums[j] < nums[i]:
+                    smallerMax = max(smallerMax, dp[j])
+                
+                    dp[i] = smallerMax +1 if smallerMax != float("-inf") else 1  
+                
+                result = max(dp[i], result)
+
+        return result
+                
+        
+        
+        
