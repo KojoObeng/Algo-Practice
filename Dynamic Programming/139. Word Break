@@ -1,0 +1,13 @@
+        wordSet = set(wordDict)
+        
+        size = len(s)
+        
+        dp = [False]*(size+1)
+        dp[0] = True
+        
+        for start in range(size+1):
+            for end in range(max(1,start), size+1):
+                if dp[start] and s[start:end] in wordSet:
+                    dp[end] = True
+
+        return dp[-1]
