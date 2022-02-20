@@ -1,0 +1,43 @@
+        size = len(s)
+        result = 0
+        
+        dp = [[False for j in range(size)] for i in range(size)]
+        
+
+        
+        for j in range(size):
+            for i in range(j+1):
+                if (i == j) or (j == i+1 and s[i] == s[j]):
+                    dp[i][j] = True
+                    result += 1
+                elif ((s[i] == s[j]) and dp[i+1][j-1]):
+                    dp[i][j] = True
+                    result += 1
+                    
+        return result
+
+                size = len(s)
+        result = 0
+        
+        def countPalindromesAroundCenter(start, end):
+            count = 0
+            
+            while start >= 0 and end <= size -1:
+                if s[start] == s[end]:
+                    count +=1
+                    start -= 1
+                    end += 1
+                else:
+                    break
+            return count
+        
+        for i in range(size):
+            one = countPalindromesAroundCenter(i, i)
+            two = countPalindromesAroundCenter(i, i+1)
+            result += one
+            result += two
+
+              
+        return result
+                    
+                    
