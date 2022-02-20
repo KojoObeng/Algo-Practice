@@ -1,0 +1,34 @@
+class Solution:
+    def findNumberOfLIS(self, nums: List[int]) -> int:
+        
+        size = len(nums)
+        
+        dp = [1]*size
+        freq = [1]*size
+        result = 0
+        
+        for j in range(1, size):
+            for i in range(j):
+                if nums[i] < nums[j]:
+                    if dp[i] +1 > dp[j]:
+                        dp[j] = dp[i] +1
+                        # how many ways we get to i, thats us now
+                        freq[j] = freq[i]
+                    elif dp[i] +1 == dp[j]:
+                        # how manys you can get to i, add it to j now
+                        freq[j] += freq[i]
+       
+        maxLen = max(dp)
+        for i in range(size):
+            if dp[i] == maxLen:
+                result += freq[i]
+
+        return result
+            
+            
+        
+                        
+        
+                
+                
+            
