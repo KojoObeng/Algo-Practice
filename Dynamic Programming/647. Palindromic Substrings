@@ -19,6 +19,7 @@
                 size = len(s)
         result = 0
         
+        
         def countPalindromesAroundCenter(start, end):
             count = 0
             
