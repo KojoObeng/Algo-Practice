@@ -26,7 +26,30 @@ class Solution:
         return result
             
             
+           size = len(nums)
+        totalSum = sum(nums)
+        halfSum = totalSum // 2
         
+        if totalSum % 2  == 1:
+            return False
+        
+        dp1 = [False for i in range(halfSum + 1)]
+        dp2 = [False for i in range(halfSum + 1)]
+        
+        dp1[0] = True
+        
+        for i in range(size):
+            for j in range(halfSum + 1):
+                if j - nums[i-1] >= 0:
+                    dp2[j] = dp1[j] or dp1[j-nums[i-1]]
+                else:
+                    dp2[j] = dp1[j]
+            
+            dp1 = dp2
+            dp2 = [False for i in range(halfSum + 1)]
+    
+        return dp1[-1]
+         
                         
         
                 
