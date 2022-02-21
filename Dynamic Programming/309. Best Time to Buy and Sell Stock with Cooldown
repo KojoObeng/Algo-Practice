@@ -1,0 +1,63 @@
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        
+        size = len(prices)
+        result = 0
+        
+        if size ==1:
+            return 0
+        
+        dp = [0]*(size + 1)
+        
+        for i in range(2, size + 1):
+            doNothingorBuy = dp[i-1]
+            sell = float("-inf")
+            
+            for j in range(1, i):
+                if j - 2 < 0:
+                    buyOnJ = prices[i-1] - prices[j-1]
+                else:
+                    buyOnJ = dp[j-2] + prices[i-1] - prices[j-1]
+                sell = max(sell, buyOnJ)
+            
+            dp[i] = max(doNothingorBuy, sell)
+            
+        
+        print(dp)
+                
+            
+        
+        return dp[-1]
+        
+        
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        
+        size = len(prices)
+        
+        
+        #actions -> buy, sell, rest
+        #states -> hold( right after you buy), right after you sell, rest
+        
+        rest = 0
+        hold = float("-inf")
+        sold  = float("-inf")
+        
+        for i in range(size):
+            tempRest = rest
+            tempHold = hold
+            tempSold = sold
+            
+            
+            rest = max(tempSold,  tempRest)
+            hold = max(tempHold, tempRest - prices[i])
+            sold = tempHold + prices[i]
+        
+        print(sold, hold, rest)
+        return max(rest, hold, sold)
+            
+
+        
+        
