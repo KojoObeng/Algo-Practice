@@ -1,0 +1,36 @@
+class Solution:
+    def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
+
+        size = len(nums)
+        totalSum = sum(nums)
+        partitionSum = totalSum // k
+
+        maxPartLength = size - k + 1
+
+        if totalSum % k != 0:
+            return False
+
+        nums.sort(reverse=True)
+        taken = [False]*size
+
+        def backtrack(count, idx, currSum, currLen):
+            if count == k-1:
+                return True
+            elif currSum > partitionSum:
+                return False
+            elif currLen > maxPartLength:
+                return False
+            elif currSum == partitionSum:
+                return backtrack(count + 1, 0, 0, 0)
+            else:
+                for j in range(idx, size):
+                    if not taken[j]:
+                        taken[j] = True
+                        if backtrack(count, j +1,  currSum + nums[j], currLen +1):
+                            return True
+                        taken[j] = False
+                return False
+
+
+
+        return backtrack(0, 0, 0, 0)
