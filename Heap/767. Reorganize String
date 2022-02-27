@@ -1,0 +1,22 @@
+class Solution:
+    def reorganizeString(self, s: str) -> str:
+        
+        ans = ""
+        size = len(s)
+        freq = Counter(s)
+        
+        lastFreq, lastChar = 0, ""
+        maxHeap = [[-f, s] for s, f in freq.items()]
+        
+        heapify(maxHeap)
+        
+        while maxHeap:
+            currFreq, currChar = heappop(maxHeap)
+            ans += currChar
+            
+            if (lastFreq < 0) and lastChar:
+                heappush(maxHeap, [lastFreq, lastChar])
+            
+            lastFreq, lastChar = currFreq + 1, currChar
+            
+        return ans if len(ans) == size else ""
