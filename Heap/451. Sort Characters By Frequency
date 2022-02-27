@@ -1,0 +1,25 @@
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        
+        result = ""
+        
+        freq = Counter(s)
+        freqKeys = list(freq)
+        
+        size = len(s)
+        keySize = len(freqKeys)
+        
+        minHeap = []
+        
+        for i in range(keySize):
+            key = freqKeys[i]
+            minHeap.append([-freq[key], key])
+            
+        heapify(minHeap)
+        
+        while minHeap:
+            freq, letter = heappop(minHeap)
+            result += letter*(freq *-1)
+        
+        return result
+            
