@@ -1,0 +1,30 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        
+        size = len(nums)
+        freq = Counter(nums)
+        freqKeys = list(freq)
+        sizeFreqKeys = len(freqKeys)
+        
+        minHeap = []
+        
+        for i in range(k):
+            key = freqKeys[i]
+            minHeap.append([freq[key], key])
+            
+        heapify(minHeap)
+            
+        for i in range(k, sizeFreqKeys):
+            key = freqKeys[i]
+            if (freq[key] > minHeap[0][0]):
+                heappushpop(minHeap, [freq[key], key])
+                
+        return [key for (_, key) in minHeap]
+                
+        
+
+            
+            
+        
+        
+        
