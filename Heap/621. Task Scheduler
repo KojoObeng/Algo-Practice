@@ -1,0 +1,62 @@
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        
+        n += 1
+        ans = 0
+        
+        #only capped to 26 spots so O(1)
+        freq = Counter(tasks)
+        
+        maxHeap = [-c for c in freq.values()]
+        heapify(maxHeap)
+        
+        while maxHeap:
+            queue = []
+            count = 0
+            for i in range(n):
+                if maxHeap:
+                    curr = heappop(maxHeap)
+                    count +=1
+                    if curr < -1:
+                        queue.append(curr +1)
+            for i in range(len(queue)):
+                heappush(maxHeap, queue[i])
+            
+            # if after adding the stack, it's still empty, then we're at the end jsut add the count
+            if maxHeap:
+                ans += n
+            else:
+                ans += count
+        
+        return ans
+    
+
+    class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        
+        size = len(tasks)
+        frequencies = [0]*26
+        
+        for i in range(size):
+            frequencies[ord(tasks[i]) - ord('A')] += 1 
+            
+        # Just log(n) sort
+        
+        frequencies.sort()
+        
+        max_freq = frequencies.pop()
+        idle_time = (max_freq-1)*(n)
+        
+        for i in range(25, -1, -1):
+            if not frequencies or frequencies[-1] == 0:
+                break
+                
+            idle_time -= min(max_freq -1, frequencies[-1])
+            frequencies.pop()
+            
+
+                
+        idle_time = max(0, idle_time)
+        
+        return idle_time + size
+        
