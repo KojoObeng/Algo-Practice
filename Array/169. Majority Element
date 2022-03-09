@@ -7,4 +7,24 @@ class Solution:
             myDict[nums[i]] +=1
             if myDict[nums[i]] > size//2:
                 return nums[i]
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        
+        size = len(nums)
+        count = 0 # just want to make sure it 
+        candidate = nums[0]
+        
+        for i in range(size):
+            if count == 0:
+                candidate = nums[i]
+                
+            if candidate == nums[i]: 
+                count +=1
+            else:
+                count -=1
+                
+        
+        return candidate
+            
             
