@@ -1,0 +1,42 @@
+class TrieNode():
+    def __init__(self):
+        self.children = {}
+        self.isWord = False
+
+class Trie():
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        curr = self.root
+        for char in word:
+            curr.children.setdefault(char, TrieNode())
+            curr = curr.children[char]
+        curr.isWord = True
+
+class Solution:
+    def longestWord(self, words: List[str]) -> str:
+            
+        self.result = ""
+        self.resultSize = 0
+        
+        def dfs(currNode, currString):
+            currSize = len(currString)
+            if currNode.isWord:
+                if currSize > self.resultSize:
+                    self.result = currString 
+                    self.resultSize = currSize
+            for child in sorted(currNode.children):
+                if currNode.children[child].isWord:
+                    dfs(currNode.children[child], currString+child)
+        
+        trie = Trie()
+        for word in words:
+            trie.insert(word)
+        root = trie.root
+        
+        dfs(root, '')
+
+        
+        return self.result
+        
