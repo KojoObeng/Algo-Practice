@@ -1,0 +1,44 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        
+        def twoSumII(idx, nums, target):
+            high = len(nums)-1
+            low = idx + 1
+            
+            while high > low:
+                currSum = nums[high] + nums[low]
+                if currSum > target:
+                    high -=1
+                elif currSum < target:
+                    low +=1
+                else:
+                    # only have to adjust for duplicates after you pick one
+                    self.result.append([nums[idx], nums[low], nums[high]])
+                    low +=1
+                    high -=1
+                    while high > low and nums[low] == nums[low-1]:
+                        low +=1
+                        
+                        
+        
+        size = len(nums)
+        nums.sort()
+        self.result = []
+        
+        for i in range(size):
+            if nums[i] > 0:
+                break
+            
+            if i == 0 or nums[i-1] != nums[i]:
+                twoSumII(i, nums,  nums[i]*-1)
+                
+                
+
+        
+        return self.result
+                    
+                    
+                
+            
+            
+            
