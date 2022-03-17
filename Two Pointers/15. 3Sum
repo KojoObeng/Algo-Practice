@@ -36,7 +36,40 @@ class Solution:
 
         
         return self.result
+
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        
+        def twoSum(idx, nums, target):
+            size = len(nums)
+            seen = set()
+            
+            for i in range(idx +1, size):
+                if nums[i] not in seen:
+                    seen.add(target - nums[i])
+                else:
+                    self.result.add((-1*target, nums[i], target - nums[i]))
+                
+        
+        size = len(nums)
+        nums.sort()
+        self.result = set()
+        
+        for i in range(size):
+            if nums[i] > 0:
+                break
+                
+            if i == 0 or nums[i-1] != nums[i]:
+                twoSum(i, nums, nums[i]*-1)
+                
+                
+        return map(list, self.result)
                     
+                    
+                
+            
+            
                     
                 
             
