@@ -65,10 +65,6 @@ class Solution:
                 
                 
         return map(list, self.result)
-                    
-                    
-                
-            
             
                     
                 

@@ -1,0 +1,54 @@
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        self.diff = float("inf")
+        self.result = float("inf")
+        size = len(nums)
+        nums.sort()
+        
+        
+        
+        def twoSum(i):
+            for j in range(i+1, size):
+                for k in range(j+1, size):
+                    currSum = (nums[i] + nums[j] + nums[k])
+                    if abs(target - currSum) < self.diff:
+                        self.diff = abs(target - currSum)
+                        self.result = currSum
+        
+        for i in range(size): 
+            if (i == 0) or (nums[i] != nums[i-1]):
+                twoSum(i)
+                
+        
+
+        return self.result
+
+    
+    class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        
+        diff = float("inf")
+        result = float("inf")
+        nums.sort()
+        size = len(nums)
+        
+        for i in range(size): 
+            low = i +1
+            high = size -1
+            while high > low:
+                currSum = nums[i] + nums[low] + nums[high]
+                if abs(currSum - target) < abs(diff):
+                    diff = currSum - target
+                    result = currSum
+                elif currSum < target:
+                    low +=1
+                else:
+                    high -=1
+            if diff == 0:
+                break
+                
+        return result
+
+            
+
+            
