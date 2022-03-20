@@ -1,0 +1,20 @@
+        if not root:
+            return root
+        
+        queue = deque([root])
+        
+        while queue:
+            size = len(queue)
+            level = []
+            for i in range(size):
+                curr = queue.popleft()
+                if curr.left:
+                    queue.append(curr.left)
+                if curr.right:
+                    queue.append(curr.right)
+                if i == size -1:
+                    curr.next = None
+                else:
+                    curr.next = queue[0]
+        
+        return root
