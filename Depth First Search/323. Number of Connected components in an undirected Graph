@@ -1,0 +1,25 @@
+        size = len(edges)
+        adjList = [[] for i in range(n)]
+        
+        for x, y in edges:
+            adjList[x].append(y)
+            adjList[y].append(x)            
+        
+        
+        seen = set()
+        result = 0
+        
+        def dfs(node):
+            for neigh in adjList[node]:
+                if neigh not in seen:
+                    seen.add(neigh)
+                    dfs(neigh)
+        
+        for i in range(n):
+            if i not in seen:
+                dfs(i)
+                result +=1
+        
+        return result
+
+
