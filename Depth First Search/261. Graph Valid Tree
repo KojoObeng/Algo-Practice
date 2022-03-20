@@ -30,4 +30,54 @@ class Solution:
         dfs(0)
         
         return len(seen) == n          
+
+class UnionFind:
+    def __init__(self, n):
+        # Create array for parents and a size array
+        self.parent = [i for i in range(n)]
+        self.size = [1]*n
+
+    def find(self, node):
+        curr = node
+        # Get root
+        while curr != self.parent[curr]:
+            curr = self.parent[curr]
+
+        # 1. Path compression, set parent of everything to root
+        while node != curr:
+            old_parent = self.parent[node]
+            self.parent[node] = curr
+            node = old_parent
+
+        return curr
+
+    def union(self, a, b):
+        rootA = self.find(a)
+        rootB = self.find(b)
+
+        # If they have the same root, return false
+        if rootA == rootB:
+            return False
+        else:
+            # 2. Union by size, Use the bigger root
+            if self.size[rootA] < self.size[rootB]:
+                self.parent[rootA] = rootB
+                self.size[rootB] += self.size[rootA]
+            else:
+                self.parent[rootB] = rootA
+                self.size[rootA] += self.size[rootB]
+            return True
+        
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        
+        if len(edges) != n-1: return False
+        
+        unionFind = UnionFind(n)
+        
+        for x, y in edges:
+            if not unionFind.union(x,y):
+                return False
+        return True
+        
         
