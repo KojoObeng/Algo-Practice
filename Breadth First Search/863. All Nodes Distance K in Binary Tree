@@ -1,7 +1,3 @@
-# DFS
-
-# All recursive
-
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
@@ -9,49 +5,48 @@
 #         self.left = None
 #         self.right = None
 
-
 class Solution:
     def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
-
+        
         result = []
-
-        if not root:
-            return root
-
-        def countFromNode(root, count):
-            if not root:
+        
+        def subtree_add(node, distance):
+            if not node:
                 return
-            if count == k:
-                result.append(root.val)
-            else:
-                countFromNode(root.left, count + 1)
-                countFromNode(root.right, count + 1)
-
-        def dfs(root):
-            if not root:
-                return -1
-            elif (root.val == target.val):
-                countFromNode(root, 0)
+            if distance == k:
+                result.append(node.val)
+                return
+            subtree_add(node.left, distance +1)
+            subtree_add(node.right, distance +1)
+            
+            
+            
+        def dfs(node):
+            if not node:
+                return float("-inf")
+            elif node == target:
+                subtree_add(node, 0)
                 return 0
+            
+            left_distance = dfs(node.left)
+            right_distance = dfs(node.right)
+            
+            if left_distance >=0:
+                if left_distance + 1 == k:
+                    result.append(node.val)
+                subtree_add(node.right, left_distance + 2)
+                return left_distance + 1
+            elif right_distance >=0:
+                if right_distance + 1 == k:
+                    result.append(node.val)
+                subtree_add(node.left, right_distance + 2)
+                return right_distance + 1
             else:
-                L, R = dfs(root.left), dfs(root.right)
-                if (L >= 0):
-                    if L + 1 == k:
-                        result.append(root.val)
-                    else:
-                        countFromNode(root.right, L + 2)
-                    return L+1
-                elif (R >= 0):
-                    if R + 1 == k:
-                        result.append(root.val)
-                    else:
-                        countFromNode(root.left, R + 2)
-                    return R+1
-                else:
-                    return -1
-
+                return float("-inf")
+                
         dfs(root)
         return result
+        
 
 # BFS
 
