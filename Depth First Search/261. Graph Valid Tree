@@ -1,0 +1,33 @@
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        adjList = [[] for i in range(n)]
+        
+        size = len(edges)
+        
+        if size != n -1:
+            return False
+        
+        for x, y  in edges:
+            adjList[x].append(y)
+            adjList[y].append(x)
+        
+        seen = set()
+        seen.add(0)
+        
+        parent = {0: -1}
+        
+        def dfs(root):  
+            for neigh in adjList[root]:
+                if root in parent and parent[root] == neigh:
+                    continue
+                if neigh not in seen:
+                    parent[neigh] = root
+                    seen.add(neigh)
+                    dfs(neigh)
+                else:
+                    return False
+                
+        dfs(0)
+        
+        return len(seen) == n          
+        
