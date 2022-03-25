@@ -1,0 +1,44 @@
+        def isPlacementValid(i, j, choice):
+            
+            for k in range(9):
+                if board[i][k] == choice:
+                    return False
+            
+            for h in range(9):
+                 if board[h][j] == choice:
+                    return False
+    
+                
+            boxRowStart = (i // 3) * 3
+            boxColStart = (j // 3) * 3
+            
+            for h in range(boxRowStart, boxRowStart + 3):
+                for k in range(boxColStart, boxColStart + 3):
+                    if board[h][k] == choice:
+                        return False
+            
+            return True
+        
+        def backtrack(r, c):
+            
+            while board[r][c] != ".":
+                c += 1
+                
+                if c >= 9:
+                    r +=1
+                    c = 0
+                if r == 9: return True
+                
+            
+            for choice in [str(i) for i in range(1, 10)]:
+                if isPlacementValid(r, c, choice):
+                    board[r][c] = choice
+
+                    if backtrack(r, c):
+                        return True
+                    else:
+                        board[r][c] = "."
+
+            return False
+
+        backtrack(0,0)
