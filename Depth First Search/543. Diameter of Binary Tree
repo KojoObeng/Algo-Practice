@@ -1,14 +1,68 @@
-        self.maxDiameter = 0
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        
+        if not root:
+            return None
+        
+        maxDiam = 0
+        nodeList = []
         
         def dfs(root):
-            if not root:
-                return -1
-            else:
-                leftDepth = dfs(root.left)
-                rightDepth = dfs(root.right)
-                self.maxDiameter = max(self.maxDiameter, leftDepth + rightDepth + 2)
-                return 1 + max(leftDepth, rightDepth)
-        
-        dfs(root)
-        return self.maxDiameter
+            nonlocal maxDiam 
+            nonlocal nodeList
             
+            if not root:
+                return (0, [])
+
+            lmax, llist = dfs(root.left)
+            rmax, rlist = dfs(root.right)
+            
+            if lmax + rmax + 1 > maxDiam:
+                maxDiam = lmax + rmax + 1 
+                nodeList = llist + [root.val] + rlist
+
+            if lmax > rmax:
+                return (lmax+1, llist + [root.val])
+            else:
+                return (rmax+1, rlist + [root.val])
+            
+        dfs(root)   
+        # maxDepth, maxList, 
+        return maxDiam -1
+
+
+            def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        
+        
+        
+        if not root:
+            return None
+        
+        maxLength = 0
+        nodeList = []
+        
+        def dfs(root):
+            nonlocal maxLength 
+            nonlocal nodeList
+            
+            if not root:
+                return (0, [], [])
+
+            lmax, llist, lans  = dfs(root.left)
+            rmax, rlist, rans = dfs(root.right)
+            
+            maxAns = lans
+            if len(rans) > len(lans):
+                maxAns = rans
+                
+            newDiam = maxAns
+            if len(llist) + len(rlist) +1 > len(maxAns):
+                newDiam = llist + [root.val] + rlist
+
+            if lmax > rmax:
+                return (lmax+1, llist + [root.val], newDiam)
+            else:
+                return (rmax+1, rlist + [root.val], newDiam)
+            
+            
+        # maxDepth, maxList, 
+        return len(dfs(root)[2]) -1
