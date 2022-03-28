@@ -1,31 +1,39 @@
-        result = 0
+    def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         
-        if not root:
-            return result
+        queue = deque([(root, 0)])
+        maxWidth = 1
         
-        minDict = {}
-        maxDict = {}
+        while queue:
+            size = len(queue)
+            firstElem = queue[0][1]
+            for i in range(size):
+                curr, currVal = queue.popleft()
+                if curr.left:
+                    queue.append((curr.left, 2*currVal))
+                    level.append(2*currVal)
+                if curr.right:
+                    queue.append((curr.right, 2*currVal +1))
+                    level.append(2*currVal+1)
+            if level:    
+                maxWidth = max(maxWidth, level[-1] - level[0] +1)
         
-        def dfs(root, depth, width):
+        return maxWidth
+
+def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        
+        self.depthDict = {}
+        self.maxWidth = 1
+        
+        def dfs(root, depth, rootVal):
             if not root:
                 return
+            if depth not in self.depthDict:
+                self.depthDict[depth] = rootVal
+                
+            self.maxWidth = max(self.maxWidth, rootVal - self.depthDict[depth] +1)
             
-            if depth not in minDict:
-                minDict[depth] = width
-                maxDict[depth] = width
-            else:
-                if width < minDict[depth]:
-                    minDict[depth] = width
-                if width > maxDict[depth]:
-                    maxDict[depth] = width
+            dfs(root.left, depth + 1, 2*rootVal)
+            dfs(root.right, depth + 1, 2*rootVal+1)
             
-            dfs(root.left, depth+1, width*2)
-            dfs(root.right, depth+1, width*2+1)
-            
-        
         dfs(root, 0, 0)
-
-        
-        for depth in minDict.keys():
-            result = max(result, maxDict[depth] - minDict[depth])
-            
+        return self.maxWidth

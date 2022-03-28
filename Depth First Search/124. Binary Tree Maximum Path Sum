@@ -1,0 +1,33 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        
+        
+        highestPoint = float("-inf")
+        
+        def dfs(root):
+            nonlocal highestPoint
+            if not root:
+                return 0
+
+            left = dfs(root.left)
+            right = dfs(root.right)
+            
+            # 2 Options: 
+            # 1. Start a new branch where this is the root node.
+            # 2. Pass up the maxsum including this node for a parent node to use
+            
+            # 1. Take the max of i) everything ii) just the right + root iii) just the root + left iii) just the root  
+            highestPoint = max(highestPoint, left + right + root.val, right + root.val, left + root.val, root.val)
+            
+            # 2. But we can only pass, i) just the node, ii) just the node + right iii) just the node + left  
+            return max(left + root.val, right + root.val, root.val)
+        
+        dfs(root)
+        return highestPoint
+            
