@@ -1,0 +1,83 @@
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        
+        if n <= 2:
+            return [i for i in range(n)]
+        
+        neigh = [[] for i in range(n)]
+
+        for a, b in edges:
+            neigh[a].append(b)
+            neigh[b].append(a)
+        
+        queue = deque([i for i in range(n) if len(neigh[i]) == 1])
+        
+        count = 0
+        
+        while n - count > 2:
+            
+            size = len(queue)
+            for i in range(size):
+                curr = queue.popleft()
+                count +=1
+                for out in neigh[curr]:
+                    neigh[curr].remove(out)
+                    neigh[out].remove(curr)
+                    if len(neigh[out]) == 1:
+                        queue.append(out)
+                        
+        return queue
+
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        
+        
+        if n <= 2:
+            return [i for i in range(n)]
+        
+        self.neighbours = [[] for i in range(n)]
+        self.prev = defaultdict(int)
+        self.distance = defaultdict(int)
+        
+        ## Adjacency List - back and forth
+        for start, end in edges:
+            self.neighbours[start].append(end)
+            self.neighbours[end].append(start)
+            
+        
+        def dfs(node, distance, prev):
+            self.distance[node] = distance
+            self.prev[node] = prev
+            
+            for neigh in self.neighbours[node]:
+                if neigh not in self.distance:
+                    dfs(neigh, distance + 1, node)
+            
+        # Longest from any Node is the first point on the diameter
+        dfs(0, 0, None)
+        first_node = max(self.distance, key=self.distance.get)
+        
+        
+        self.prev = defaultdict(int)
+        self.distance = defaultdict(int)
+        
+        # Longest from first point is the second point on the diameter
+        dfs(first_node, 0, None)
+        second_node = max(self.distance, key=self.distance.get)
+
+        # Print out path using prev
+        path = []
+        while second_node != None:
+            path.append(second_node)
+            second_node = self.prev[second_node]
+        
+        print(path)
+        size = len(path)
+        
+        if (size % 2 == 1):
+            return [path[(size)//2]]
+        else:
+            return [path[size//2], path[(size-1)//2]]
+            
+        
+                        
