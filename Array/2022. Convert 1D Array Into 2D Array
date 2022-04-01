@@ -1,0 +1,22 @@
+class Solution:
+    def construct2DArray(self, original: List[int], m: int, n: int) -> List[List[int]]:
+        
+        if len(original) != m * n:
+            return []
+        
+        matrix = [ ["_" for i in range(n)] for i in range(m)]
+        
+        count = 0
+        for a in range(m):
+            for b in range(n):
+                if count == len(original):
+                    break
+                else:
+                    matrix[a][b] = original[count]
+                    count +=1
+                
+            if count == len(original):
+                break
+                
+        
+        return matrix
