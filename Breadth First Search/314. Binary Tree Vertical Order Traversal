@@ -1,0 +1,35 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        
+        if not root:
+            return []
+        
+        levelDict = defaultdict(list)
+        maxCol, minCol = 0, 0
+        
+        
+        queue = deque([(root, 0)])
+        
+        while queue:
+            size = len(queue)
+            for i in range(size):
+                curr, col = queue.popleft()
+                
+                levelDict[col].append(curr.val)
+                
+                maxCol = max(maxCol, col)
+                minCol = min(minCol, col)
+                
+                if curr.left:    
+                    queue.append((curr.left, col - 1))
+                if curr.right:
+                    queue.append((curr.right, col + 1))
+        
+        return [ levelDict[i] for i in range(minCol, maxCol +1)]
+            
