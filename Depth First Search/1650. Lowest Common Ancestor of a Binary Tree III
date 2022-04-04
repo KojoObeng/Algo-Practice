@@ -1,0 +1,49 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+        self.parent = None
+"""
+
+class Solution:
+    def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
+        
+        
+        pParents = set()
+        result = None
+        
+        def getPParents(root):
+            nonlocal pParents
+            
+            if not root:
+                return
+            
+            pParents.add(root)
+                
+                
+            getPParents(root.parent)
+        
+        def findMatch(root):
+            nonlocal result
+            nonlocal pParents 
+            
+            if not root:
+                return
+            
+            if root in pParents:
+                if not result:
+                    result = root
+                return
+                
+                
+            findMatch(root.parent)
+        
+        
+        
+        getPParents(p)
+        findMatch(q)
+        
+        return result 
