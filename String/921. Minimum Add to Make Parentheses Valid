@@ -1,0 +1,22 @@
+class Solution:
+    def minAddToMakeValid(self, s: str) -> int:
+        
+        stack = deque([])
+        
+        size = len(s)
+        result = 0
+        
+        
+        # if the stack is empty and we have a right, we must add a param
+        for i in range(size):
+            if s[i] == "(":
+                stack.append(s[i])
+            else:
+                if len(stack) >= 1:
+                    stack.pop()
+                
+                else:
+                    result += 1
+        
+        return result + len(stack)
+        
