@@ -1,0 +1,28 @@
+class Solution:
+    def lastStoneWeight(self, stones: List[int]) -> int:
+        
+        stones.sort()   
+        
+        while len(stones) > 1:
+            print(stones)
+            y = stones.pop()
+            x = stones.pop()
+            
+            
+            if y != x:
+                y = y - x
+                size = len(stones)
+                
+                pos = None
+                
+                for idx in range(size):
+                    if y <= stones[idx]:
+                        pos = idx
+                        break
+                        
+                if pos == None:
+                    pos = size
+                    
+                stones.insert(pos, y)
+            
+        return stones[0] if stones else 0
